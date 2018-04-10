@@ -1,4 +1,5 @@
 import TodoList from '../../models/todo.model';
+import User from '../../models/user.model';
 import { validateAddTodo, validateEditTodo } from './services';
 
 /**
@@ -21,7 +22,7 @@ export default class AddTodos {
   static addTodo(request, response) {
     const { title } = request.body;
     const { completed } = request.body;
-    const { userId } = request.body;
+    const userId = request.decoded.id;
     const addTodo = validateAddTodo(title, completed, userId);
     addTodo.save((error, addedTodo) => {
       if (!error) {
@@ -47,6 +48,27 @@ export default class AddTodos {
       }
       return response.status(500).send({ error });
     });
+  }
+
+  /**
+   *
+   *
+   * @static
+   * @param {any} request
+   * @param {any} response
+   *
+   * @memberOf AddTodos
+   */
+  static getPrivateTodos(request, response) {
+    const { id } = request.decoded;
+    TodoList.find({ createdBy: id })
+      .populate({ path: 'users', select: 'email' })
+      .exec((error, todo) => {
+        if (!error) {
+          return response.send({ todo });
+        }
+        return response.status(500).send({ error });
+      });
   }
 
   /**

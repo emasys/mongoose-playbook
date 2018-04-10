@@ -16,6 +16,10 @@ const todoList = new Schema({
     type: Date,
     default: Date.now(),
   },
+  createdBy: {
+    type: String,
+    required: true,
+  },
   updatedAt: {
     type: Date,
     required: false,
