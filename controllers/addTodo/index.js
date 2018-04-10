@@ -1,4 +1,4 @@
-import { TodoList } from '../../models/todo.model';
+import TodoList from '../../models/todo.model';
 import { validateAddTodo, validateEditTodo } from './services';
 
 /**

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const todoList = new Schema({
   title: {
@@ -22,4 +22,6 @@ const todoList = new Schema({
   },
 });
 
-export const TodoList = mongoose.model('TodoList', todoList);
+const TodoList = mongoose.model('TodoList', todoList);
+
+export default TodoList;

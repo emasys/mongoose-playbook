@@ -1,4 +1,4 @@
-import { TodoList } from '../../models/todo.model';
+import TodoList from '../../models/todo.model';
 
 export const validateAddTodo = (title, completed) => {
   const model = new TodoList();
@@ -32,4 +32,3 @@ export const validateEditTodo = (title, completed, date) => {
   }
   return editData;
 };
-
