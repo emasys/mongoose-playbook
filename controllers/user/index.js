@@ -1,5 +1,6 @@
 import User from '../../models/user.model';
 import bcrypt from 'bcrypt';
+import { signToken } from '../../config';
 
 export default class Users {
   static addUser(request, response) {
@@ -8,7 +9,8 @@ export default class Users {
     user.password = request.body.password;
     user.save((error, user) => {
       if (!error) {
-        return response.send({ user });
+        const token = signToken({ id: user.id });
+        return response.send({ token });
       }
       return response.status(500).send({ error: error.message });
     });
@@ -21,7 +23,8 @@ export default class Users {
       if (!error) {
         return user.comparePassword(password, (err, isMatch) => {
           if (!err && isMatch) {
-            return response.send({ user });
+            const token = signToken({ id: user.id });
+            return response.send({ token });
           }
           return response.status(400).send({ error: 'invalid credentials' });
         });
