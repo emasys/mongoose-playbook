@@ -1,7 +1,8 @@
 import TodoList from '../../models/todo.model';
 
-export const validateAddTodo = (title, completed) => {
+export const validateAddTodo = (title, completed, userId) => {
   const model = new TodoList();
+  model.users.push(userId);
   if (title) {
     model.title = title.trim() || 'untitled';
   } else {

@@ -20,6 +20,7 @@ const todoList = new Schema({
     type: Date,
     required: false,
   },
+  users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
 const TodoList = mongoose.model('TodoList', todoList);

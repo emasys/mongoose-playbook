@@ -21,7 +21,8 @@ export default class AddTodos {
   static addTodo(request, response) {
     const { title } = request.body;
     const { completed } = request.body;
-    const addTodo = validateAddTodo(title, completed);
+    const { userId } = request.body;
+    const addTodo = validateAddTodo(title, completed, userId);
     addTodo.save((error, addedTodo) => {
       if (!error) {
         return response.send({ addedTodo });
@@ -59,12 +60,14 @@ export default class AddTodos {
    */
   static getOneTodo(request, response) {
     const { id } = request.params;
-    TodoList.findById(id, (error, todo) => {
-      if (!error) {
-        return response.send({ todo });
-      }
-      return response.status(500).send({ error });
-    });
+    TodoList.findOne({ _id: id })
+      .populate({ path: 'users', select: 'email' })
+      .exec((error, todo) => {
+        if (!error) {
+          return response.send({ todo });
+        }
+        return response.status(500).send({ error });
+      });
   }
 
   /**
