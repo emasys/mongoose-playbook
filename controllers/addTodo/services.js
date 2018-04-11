@@ -26,10 +26,18 @@ export const validateEditTodo = (title, completed, date) => {
   switch (completed) {
     case 'true':
     case 'false':
-      editData = { title: title.trim() || 'untitled', completed, updatedAt: date };
+      if (title && title.trim().length > 0 && title !== 'untitled') {
+        editData = { title: title.trim(), completed, updatedAt: date };
+      } else {
+        editData = { completed, updatedAt: date };
+      }
       break;
     default:
-      editData = { title: title.trim() || 'untitled', updatedAt: date };
+      if (title && title.trim().length > 0 && title !== 'untitled') {
+        editData = { title: title.trim(), updatedAt: date };
+      } else {
+        editData = { updatedAt: date };
+      }
       break;
   }
   return editData;
