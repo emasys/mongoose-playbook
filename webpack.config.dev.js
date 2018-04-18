@@ -4,7 +4,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = merge(common, {
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  // plugins: [new webpack.HotModuleReplacementPlugin()],
   devtool: 'inline-source-map',
   devServer: {
     host: process.env.HOST,

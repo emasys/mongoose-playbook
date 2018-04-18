@@ -1,0 +1,15 @@
+.signup-form {
+  background: white;
+  padding: 2rem;
+  margin-top: 10rem;
+}
+
+.signup-button {
+  background: white;
+  padding: 1rem;
+  color: black;
+  margin-top: 10rem;
+  &:hover {
+    color: white !important;
+  }
+}

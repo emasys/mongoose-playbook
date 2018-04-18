@@ -8,7 +8,7 @@ export default class TodoList extends Component {
     super(props);
     this.state = {
       checked: false,
-      title: '',
+      title: ''
     };
     this.renderTodos = this.renderTodos.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -19,18 +19,24 @@ export default class TodoList extends Component {
     this.setState({ title });
   }
 
-  renderTodos({ todos: { allTodos: { todos } } }) {
+  renderTodos({ handleEdit, handleDelete, todos: { allTodos: { todo } } }) {
     const compare = (a, b) => {
       if (a.completed < b.completed) return 1;
       if (a.completed > b.completed) return -1;
       return 0;
     };
-    console.log('tying to render todo item', todos.sort(compare));
-    return todos.map(item => <TodoItem todoItem={item} key={item._id} />);
+    todo.sort(compare);
+    return todo.map(item => (
+      <TodoItem
+        todoItem={item}
+        key={item._id}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
+    ));
   }
 
   render() {
-    console.log(this.props);
     return <div>{this.renderTodos(this.props)}</div>;
   }
 }

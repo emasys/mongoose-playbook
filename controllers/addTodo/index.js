@@ -110,7 +110,7 @@ export default class AddTodos {
     const date = Date.now();
     const editData = validateEditTodo(title, completed, date);
     TodoList.findOne({ _id: id }, (err, todo) => {
-      if (!err) {
+      if (todo) {
         if (todo.createdBy === request.decoded.id) {
           return TodoList.findByIdAndUpdate(
             id,

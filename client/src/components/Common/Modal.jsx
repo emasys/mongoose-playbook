@@ -1,24 +1,28 @@
 import React from 'react';
 
-export default ({ title, handleChange }) => {
-  console.log('title ====>', title);
+export default ({ title, handleChange, addTask }) => {
   return (
     <div>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="newTaskModal"
         tabIndex="-1"
         role="dialog"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="newTaskModal"
         aria-hidden="true"
       >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                Modify this task
+              <h5 className="modal-title" id="newTaskModal">
+                Add a new task
               </h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -33,16 +37,26 @@ export default ({ title, handleChange }) => {
                     className="form-control"
                     id="recipient-name"
                     value={title}
-                    onChange={event => handleChange(event, title)}
+                    name="title"
+                    onChange={handleChange}
                   />
                 </div>
               </form>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-dismiss="modal"
+              >
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                data-dismiss="modal"
+                className="btn btn-primary"
+                onClick={addTask}
+              >
                 Save
               </button>
             </div>

@@ -3,14 +3,15 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // components
 import Home from '../components/Home/container';
-import DnD from '../playgound/index';
+import SignUp from '../components/Auth/containers';
 
 const Routes = () => (
   <BrowserRouter>
     <div>
       <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/dnd" component={DnD} />
+        <Route path="/" exact component={SignUp} />
+        <Route path="/todos" component={Home} />
+        <Route path="*" component={Home} />
       </Switch>
     </div>
   </BrowserRouter>
