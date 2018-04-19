@@ -1,5 +1,5 @@
 import express from 'express';
-import TodoList from '../controllers/addTodo';
+import TodoList from '../controllers/todo';
 import Users from '../controllers/user';
 import Auth from '../middleware';
 

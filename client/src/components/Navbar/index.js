@@ -1,71 +1,71 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class Navbar extends Component {
-  render() {
-    return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="#">
-          Todo
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav">
-            <li className="nav-item active">
-              <a className="nav-link" href="#">
-                Home <span className="sr-only">(current)</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Completed
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                In progress
-              </a>
-            </li>
-            <form className="form-inline">
-              <input
-                className="form-control mr-sm-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-            </form>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                username
-              </a>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a className="dropdown-item" href="#">
-                  Add new task
-                </a>
-                <a className="dropdown-item" href="#">
-                  sign out
-                </a>
-              </div>
-            </li>
-          </ul>
+export default props => {
+  const { status, searchResult, signOut, keyword, filterBy } = props;
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-light m-20">
+      <a className="navbar-brand" href="#" onClick={signOut}>
+        {status}
+      </a>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon" />
+      </button>
+
+      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <a className="nav-link" href="#">
+              all <span className="sr-only">(current)</span>
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              href="#"
+              onClick={event => filterBy(event, true)}
+            >
+              completed
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              href="#"
+              onClick={event => filterBy(event, false)}
+            >
+              not completed
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              href="#"
+              data-toggle="modal"
+              data-target="#newTaskModal"
+            >
+              new task
+            </a>
+          </li>
+        </ul>
+        <div className="form-inline my-2 my-lg-0">
+          <input
+            className="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            value={keyword}
+            onChange={searchResult}
+          />
         </div>
-      </nav>
-    );
-  }
-}
+      </div>
+    </nav>
+  );
+};

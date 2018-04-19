@@ -19,14 +19,14 @@ export default class TodoList extends Component {
     this.setState({ title });
   }
 
-  renderTodos({ handleEdit, handleDelete, todos: { allTodos: { todo } } }) {
+  renderTodos({ handleEdit, handleDelete, todos }) {
     const compare = (a, b) => {
-      if (a.completed < b.completed) return 1;
-      if (a.completed > b.completed) return -1;
+      if (a.updatedAt < b.updatedAt) return 1;
+      if (a.updatedAt > b.updatedAt) return -1;
       return 0;
     };
-    todo.sort(compare);
-    return todo.map(item => (
+    todos.sort(compare);
+    return todos.map(item => (
       <TodoItem
         todoItem={item}
         key={item._id}

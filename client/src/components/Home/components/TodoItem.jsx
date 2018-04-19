@@ -69,13 +69,12 @@ export default class TodoItem extends Component {
 
   render() {
     const { edit, title, completed } = this.state;
-    // const { todoItem: { completed, createdAt, createdBy } } = this.props;
     const completedStyle = completed ? 'completed' : 'grayout';
     const completedText = completed ? 'completed' : 'not completed';
     return (
       <div className="container mt-20">
         <div className="row justify-content-center">
-          <div className="col-lg-6">
+          <div className="col">
             <div className="todo-list">
               <div className="card mb-2">
                 <div className="card-body">
@@ -96,6 +95,8 @@ export default class TodoItem extends Component {
                     {!edit && (
                       <button
                         className="btn btn-sm p-0 m-0 bg-transparent"
+                        data-toggle="modal"
+                        data-target="#deleteModal"
                         onClick={this.handleDelete}
                       >
                         <i className="fas fa-trash-alt mr-3 red-color" />

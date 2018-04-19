@@ -11,7 +11,6 @@ import { signUp, signIn } from '../../../actions/auth';
 import Forms from '../../Common/Forms';
 
 class SignUp extends Component {
-  // static propTypes = {};
   constructor(props) {
     super(props);
     this.state = {

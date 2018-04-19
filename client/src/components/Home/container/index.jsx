@@ -7,13 +7,17 @@ import { signOut } from '../../../actions/auth';
 // Components
 import TodoList from '../components/TodoList';
 import Modal from '../../Common/Modal';
+import Navbar from '../../Navbar';
+import DeleteModal from '../components/deleteModal';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: [],
-      title: ''
+      todoList: [],
+      title: '',
+      keyword: '',
+      itemId: null
     };
   }
 
@@ -25,6 +29,35 @@ class Home extends Component {
     }
   };
 
+  componentWillReceiveProps = nextProps => {
+    this.setState({
+      todoList: nextProps.todos.allTodos.todo
+    });
+  };
+
+  renderSearchResult = event => {
+    event.preventDefault();
+    const { todos: { allTodos: { todo } } } = this.props;
+    const { todoList } = this.state;
+
+    const keyword = event.target.value;
+    if (keyword !== '') {
+      const filteredKeywords = todo.filter(item => {
+        const filtered = item.title;
+        return filtered.includes(keyword);
+      });
+      this.setState({
+        todoList: filteredKeywords
+      });
+    } else {
+      this.setState({
+        todoList: todo
+      });
+    }
+    this.setState({
+      keyword
+    });
+  };
   createNewTask = () => {
     const data = {
       title: this.state.title,
@@ -40,6 +73,18 @@ class Home extends Component {
     });
   };
 
+  filterBy = (event, params) => {
+    event.preventDefault();
+    const { todos: { allTodos: { todo } } } = this.props;
+    const filteredList = todo.filter(item => {
+      return item.completed === params;
+    });
+
+    this.setState({
+      todoList: filteredList
+    });
+  };
+
   signOut = event => {
     event.preventDefault();
     this.props.signOut();
@@ -47,6 +92,7 @@ class Home extends Component {
   };
 
   handleEdit = (id, data) => {
+    this.setState({ keyword: '' });
     const { title, completed } = data;
     let stringifyCompleted;
     if (completed) {
@@ -61,15 +107,20 @@ class Home extends Component {
     this.props.editTask(id, editData);
   };
 
-  handleDelete = id => {
-    this.props.deleteTodo(id);
+  getTodoId = itemId => {
+    this.setState({ itemId });
+  };
+  handleDelete = () => {
+    this.props.deleteTodo(this.state.itemId);
   };
 
   render() {
     const { loggedIn } = this.props.auth;
     const status = loggedIn ? 'sign out' : 'sign in';
+    const { todoList, keyword } = this.state;
     return (
       <div className="container">
+        <DeleteModal confirmDelete={this.handleDelete} />
         <Modal
           title={this.state.title}
           handleChange={this.handleChange}
@@ -77,37 +128,17 @@ class Home extends Component {
         />
         <div className="row justify-content-center">
           <div className="col-10">
-            <nav className="navbar navbar-light bg-light mt-20">
-              <a href="#" className="navbar-brand" onClick={this.signOut}>
-                {status}
-              </a>
-              <a
-                href="#"
-                className="navbar-brand"
-                data-toggle="modal"
-                data-target="#newTaskModal"
-              >
-                new task
-              </a>
-              <form className="form-inline">
-                <input
-                  className="form-control mr-sm-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button
-                  className="btn btn-outline-success my-2 my-sm-0"
-                  type="submit"
-                >
-                  Search
-                </button>
-              </form>
-            </nav>
+            <Navbar
+              status={status}
+              filterBy={this.filterBy}
+              searchResult={this.renderSearchResult}
+              signOut={this.signOut}
+              keyword={keyword}
+            />
             <TodoList
-              todos={this.props.todos}
+              todos={todoList}
               handleEdit={this.handleEdit}
-              handleDelete={this.handleDelete}
+              handleDelete={this.getTodoId}
             />
           </div>
         </div>
