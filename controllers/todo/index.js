@@ -1,5 +1,4 @@
 import TodoList from '../../models/todo.model';
-import User from '../../models/user.model';
 import { validateAddTodo, validateEditTodo } from './services';
 
 /**
@@ -86,7 +85,10 @@ export default class AddTodos {
       .populate({ path: 'users', select: 'email' })
       .exec((error, todo) => {
         if (!error) {
-          return response.send({ todo });
+          if (todo.createdBy === request.decoded.id) {
+            return response.send({ todo });
+          }
+          return response.status(401).send({ message: "you can't view this todo" });
         }
         return response.status(500).send({ error });
       });
@@ -107,11 +109,24 @@ export default class AddTodos {
     const { completed } = request.body;
     const date = Date.now();
     const editData = validateEditTodo(title, completed, date);
-    TodoList.findByIdAndUpdate(id, { $set: editData }, { new: true }, (error, newTodo) => {
-      if (!error) {
-        return response.send({ newTodo });
+    TodoList.findOne({ _id: id }, (err, todo) => {
+      if (todo) {
+        if (todo.createdBy === request.decoded.id) {
+          return TodoList.findByIdAndUpdate(
+            id,
+            { $set: editData },
+            { new: true },
+            (error, newTodo) => {
+              if (!error) {
+                return response.send({ newTodo });
+              }
+              return response.status(500).send({ error: error.message });
+            },
+          );
+        }
+        return response.status(401).send({ message: "you can't edit this todo" });
       }
-      return response.status(500).send({ error: error.message });
+      return response.status(500).send({ error: err.message });
     });
   }
 

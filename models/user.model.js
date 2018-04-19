@@ -1,4 +1,4 @@
-import mongoose, { SchemaType } from 'mongoose';
+import mongoose from 'mongoose';
 import isEmail from 'validator/lib/isEmail';
 import bcrypt from 'bcrypt';
 
@@ -16,13 +16,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  // todos: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: 'TodoList',
-  //   },
-  // ],
+
 });
+
+/* eslint-disable */
 UserSchema.pre('save', function (next) {
   const user = this;
   if (!user.isModified('password')) return next();

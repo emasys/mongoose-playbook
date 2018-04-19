@@ -1,0 +1,73 @@
+//colors
+$white: #fff;
+$black: #000;
+$green: #90ee90;
+$light-green: #98e884;
+$grey: #d3d3d3;
+$red: #f08080;
+$blue: #87cefa;
+$cyan: #008b8b;
+
+//Styles
+.signup-form {
+  background: $white;
+  margin-top: 10rem;
+  padding: 2rem;
+}
+
+.signup-button {
+  background: $white;
+  color: $black;
+  margin-top: 10rem;
+  padding: 1rem;
+
+  &:hover {
+    color: $white !important;
+  }
+}
+
+.todo-item-content {
+  border-radius: .2rem;
+  display: absolute;
+  float: left;
+  font-size: .5rem;
+  left: 0;
+  padding: .3rem;
+  top: 0;
+  width: auto;
+}
+
+.completed {
+  background: $green;
+  box-shadow: 0 0 3px 1px $light-green;
+}
+
+.grayout {
+  background: $grey;
+  box-shadow: 0 0 3px 1px $grey;
+}
+
+.card {
+  border: $grey;
+  box-shadow: 0 0 10px $grey;
+  height: 6rem;
+}
+
+.red-color {
+  color: $red;
+}
+
+.blue-color {
+  color: $blue;
+}
+
+.green-color {
+  color: $cyan;
+}
+
+.edit-input {
+  border: 0;
+  border-bottom: solid thin $grey;
+  padding: 0;
+  width: 100%;
+}
